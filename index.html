@@ -47,8 +47,8 @@
         <div id="form-content">
             <h3 class="text-xl font-semibold mb-4">Join Our Waitlist</h3>
             <p class="mb-6">Be the first to know when Huddle launches. We'll only send you important updates.</p>
-            <form id="waitlist-form" class="space-y-4">
-                <input type="email" id="email-input" class="w-full px-4 py-2 border border-[#6D6B77] rounded-full focus:outline-none focus:ring-2 focus:ring-[#B97F77]" placeholder="Enter your email address" required>
+            <form id="waitlist-form" method="POST" action="https://script.google.com/macros/s/AKfycbyWLE6nn5GgHZEg8rY5Wd4Oq3v5L8X7gErQ6D_gOdTNLI5euk5eXEenZccYBUSNDsGJuw/exec" class="space-y-4">
+                <input name="Email" id="email-input" type="email" class="w-full px-4 py-2 border border-[#6D6B77] rounded-full focus:outline-none focus:ring-2 focus:ring-[#B97F77]" placeholder="Enter your email address" required>
                 <button type="submit" class="bg-[#B97F77] text-white font-bold py-2 px-6 rounded-full w-full hover:bg-[#A36D64] transition-colors">Submit</button>
             </form>
         </div>
@@ -63,11 +63,13 @@
     <header class="py-4 px-6 md:px-12 flex items-center justify-between sticky top-0 z-50 bg-[#F7F3EF] shadow-sm">
         <div class="flex items-center">
             <a href="#hero" class="text-2xl font-bold text-[#6D6B77]">Huddle</a>
-            <nav class="flex space-x-8 ml-8">
-                <a href="#features" class="text-[#6D6B77] hover:text-[#B97F77] transition-colors hidden md:block">Features</a>
-                <a href="#how-it-works" class="text-[#6D6B77] hover:text-[#B97F77] transition-colors hidden md:block">How it Works</a>
-                <a href="./ourstory.html" class="text-[#6D6B77] hover:text-[#B97F77] transition-colors">Our Story</a>
+            <nav class="flex space-x-8 ml-8 hidden md:flex">
+                <a href="#features" class="text-[#6D6B77] hover:text-[#B97F77] transition-colors">Features</a>
+                <a href="#how-it-works" class="text-[#6D6B77] hover:text-[#B97F77] transition-colors">How it Works</a>
             </nav>
+        </div>
+        <div class="flex-grow flex justify-center md:flex-grow-0 md:justify-end">
+            <a href="./our_story.html" class="text-[#6D6B77] hover:text-[#B97F77] transition-colors md:mr-8">Our Story</a>
         </div>
         <button id="get-started-nav" class="bg-[#B97F77] text-white font-bold py-2 px-6 rounded-full hover:bg-[#A36D64] transition-colors">Join the Waitlist</button>
     </header>
@@ -155,7 +157,7 @@
     <!-- Call to Action Section -->
     <section class="bg-[#6D6B77] py-20 text-center">
         <div class="container mx-auto px-4 md:px-12">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Connect?</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Reconnect?</h2>
             <p class="text-lg md:text-xl text-[#F7F3EF] mb-8">Join thousands of couples strengthening their relationship, one conversation at a time.</p>
             <button id="get-started-cta" class="bg-[#B97F77] text-white font-bold text-lg py-4 px-8 rounded-full shadow-lg hover:bg-[#A36D64] transition-colors transform hover:scale-105">
                 Join the Waitlist
@@ -177,6 +179,7 @@
             const thankYouContent = document.getElementById('thank-you-content');
             const closeButton = document.getElementById('close-message');
             const waitlistForm = document.getElementById('waitlist-form');
+            const emailInput = document.getElementById('email-input');
 
             // Show message box and backdrop on button click
             getStartedButtons.forEach(button => {
@@ -187,14 +190,35 @@
             });
 
             // Handle form submission
-            waitlistForm.addEventListener('submit', (e) => {
+            waitlistForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                // In a real app, you would send the email to a server here.
-                // For this example, we'll just show the thank you message.
-                
-                // Hide the form and show the thank you message
-                formContent.classList.add('hidden');
-                thankYouContent.classList.remove('hidden');
+                const formData = new FormData(waitlistForm);
+                const scriptURL = waitlistForm.action;
+
+                try {
+                    const response = await fetch(scriptURL, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    if (response.ok) {
+                        formContent.classList.add('hidden');
+                        thankYouContent.classList.remove('hidden');
+                        // Clear the form field on successful submission
+                        emailInput.value = '';
+                    } else {
+                        throw new Error('Form submission failed.');
+                    }
+                } catch (error) {
+                    console.error('Failed to submit form:', error);
+                    const originalText = thankYouContent.querySelector('p').textContent;
+                    thankYouContent.querySelector('p').textContent = 'Failed to submit the form. Please try again later.';
+                    formContent.classList.add('hidden');
+                    thankYouContent.classList.remove('hidden');
+                    closeButton.addEventListener('click', () => {
+                        thankYouContent.querySelector('p').textContent = originalText;
+                    }, { once: true });
+                }
             });
 
             // Hide message box and backdrop on close button click
