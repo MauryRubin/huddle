@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huddle - The Couple's Retrospective App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F7F3EF;
+            color: #4B4B4B;
+        }
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+            text-align: center;
+        }
+        .backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Backdrop -->
+    <div id="backdrop" class="hidden backdrop"></div>
+
+    <!-- Message Box Element -->
+    <div id="message-box" class="hidden message-box">
+        <div id="form-content">
+            <h3 class="text-xl font-semibold mb-4">Join Our Waitlist</h3>
+            <p class="mb-6">Be the first to know when Huddle launches. We'll only send you important updates.</p>
+            <form id="waitlist-form" class="space-y-4">
+                <input type="email" id="email-input" class="w-full px-4 py-2 border border-[#6D6B77] rounded-full focus:outline-none focus:ring-2 focus:ring-[#B97F77]" placeholder="Enter your email address" required>
+                <button type="submit" class="bg-[#B97F77] text-white font-bold py-2 px-6 rounded-full w-full hover:bg-[#A36D64] transition-colors">Submit</button>
+            </form>
+        </div>
+        <div id="thank-you-content" class="hidden">
+            <h3 class="text-xl font-semibold mb-4">Thank You!</h3>
+            <p class="mb-6">You've been added to the waitlist. We'll be in touch soon!</p>
+            <button id="close-message" class="bg-[#B97F77] text-white font-bold py-2 px-6 rounded-full hover:bg-[#A36D64] transition-colors">Close</button>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="py-4 px-6 md:px-12 flex items-center justify-between sticky top-0 z-50 bg-[#F7F3EF] shadow-sm">
+        <div class="flex items-center">
+            <a href="#hero" class="text-2xl font-bold text-[#6D6B77]">Huddle</a>
+            <nav class="flex space-x-8 ml-8">
+                <a href="#features" class="text-[#6D6B77] hover:text-[#B97F77] transition-colors hidden md:block">Features</a>
+                <a href="#how-it-works" class="text-[#6D6B77] hover:text-[#B97F77] transition-colors hidden md:block">How it Works</a>
+                <a href="./our_story.html" class="text-[#6D6B77] hover:text-[#B97F77] transition-colors">Our Story</a>
+            </nav>
+        </div>
+        <button id="get-started-nav" class="bg-[#B97F77] text-white font-bold py-2 px-6 rounded-full hover:bg-[#A36D64] transition-colors">Join the Waitlist</button>
+    </header>
+
+    <!-- Hero Section -->
+    <main id="hero" class="container mx-auto px-4 md:px-12 py-20 flex flex-col md:flex-row items-center justify-between">
+        <div class="md:w-1/2 text-center md:text-left mb-12 md:mb-0">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-[#4B4B4B] mb-4">Connect, Grow, and Thrive</h1>
+            <p class="text-lg md:text-xl text-[#6D6B77] mb-8 max-w-lg mx-auto md:mx-0">
+                Huddle guides couples through monthly check-ins to foster honest conversations, deepen connection, and strengthen your relationship over time.
+            </p>
+            <button id="get-started-hero" class="bg-[#B97F77] text-white font-bold text-lg py-4 px-8 rounded-full shadow-lg hover:bg-[#A36D64] transition-colors transform hover:scale-105">
+                Get Early Access
+            </button>
+        </div>
+        <div class="md:w-1/2 flex justify-center md:pl-12">
+            <img src="https://images.pexels.com/photos/9750735/pexels-photo-9750735.jpeg" alt="A happy couple laughing together on a boat" class="rounded-3xl shadow-2xl w-full max-w-sm">
+        </div>
+    </main>
+
+    <!-- Features Section -->
+    <section id="features" class="bg-[#E5D9D4] py-20">
+        <div class="container mx-auto px-4 md:px-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-[#4B4B4B] mb-12">How It Helps You Grow</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <!-- Feature 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-xl text-center flex flex-col items-center transform hover:scale-105 transition-transform">
+                    <svg class="w-24 h-24 mb-4 text-[#B97F77]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15.94 7.61999L11.06 9.61999C10.7251 9.75225 10.421 9.95185 10.1664 10.2064C9.91185 10.461 9.71225 10.7651 9.57999 11.1L7.57999 15.98C7.54715 16.0636 7.54869 16.1567 7.58429 16.2392C7.61988 16.3216 7.68664 16.3866 7.76999 16.42C7.85065 16.4499 7.93934 16.4499 8.02 16.42L12.9 14.42C13.2348 14.2877 13.539 14.0881 13.7936 13.8336C14.0481 13.579 14.2477 13.2748 14.38 12.94L16.38 8.05999C16.4128 7.97643 16.4113 7.88326 16.3757 7.80082C16.3401 7.71839 16.2733 7.65338 16.19 7.61999C16.1093 7.59013 16.0207 7.59013 15.94 7.61999ZM12 13C11.8022 13 11.6089 12.9413 11.4444 12.8315C11.28 12.7216 11.1518 12.5654 11.0761 12.3827C11.0004 12.2 10.9806 11.9989 11.0192 11.8049C11.0578 11.6109 11.153 11.4327 11.2929 11.2929C11.4327 11.153 11.6109 11.0578 11.8049 11.0192C11.9989 10.9806 12.2 11.0004 12.3827 11.0761C12.5654 11.1518 12.7216 11.28 12.8315 11.4444C12.9413 11.6089 13 11.8022 13 12C13 12.2652 12.8946 12.5196 12.7071 12.7071C12.5196 12.8946 12.2652 13 12 13Z" fill="currentColor"></path>
+                        <path d="M12 21C10.22 21 8.47991 20.4722 6.99987 19.4832C5.51983 18.4943 4.36628 17.0887 3.68509 15.4442C3.0039 13.7996 2.82567 11.99 3.17294 10.2442C3.5202 8.49836 4.37737 6.89472 5.63604 5.63604C6.89472 4.37737 8.49836 3.5202 10.2442 3.17294C11.99 2.82567 13.7996 3.0039 15.4442 3.68509C17.0887 4.36628 18.4943 5.51983 19.4832 6.99987C20.4722 8.47991 21 10.22 21 12C21 14.387 20.0518 16.6761 18.364 18.364C16.6761 20.0518 14.387 21 12 21ZM12 4.5C10.5166 4.5 9.0666 4.93987 7.83323 5.76398C6.59986 6.58809 5.63856 7.75943 5.07091 9.12988C4.50325 10.5003 4.35473 12.0083 4.64411 13.4632C4.9335 14.918 5.64781 16.2544 6.6967 17.3033C7.7456 18.3522 9.08197 19.0665 10.5368 19.3559C11.9917 19.6453 13.4997 19.4968 14.8701 18.9291C16.2406 18.3614 17.4119 17.4001 18.236 16.1668C19.0601 14.9334 19.5 13.4834 19.5 12C19.5 10.0109 18.7098 8.10323 17.3033 6.6967C15.8968 5.29018 13.9891 4.5 12 4.5Z" fill="currentColor"></path>
+                    </svg>
+                    <h3 class="text-2xl font-semibold mb-2 text-[#4B4B4B]">Guided Reflection</h3>
+                    <p class="text-[#6D6B77]">Thought-provoking questions to help you reflect on the month's highs and lows, celebrating victories and navigating challenges together.</p>
+                </div>
+                <!-- Feature 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-xl text-center flex flex-col items-center transform hover:scale-105 transition-transform">
+                    <svg class="w-24 h-24 text-[#B97F77] mb-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20.082 3.01787L20.1081 3.76741L20.082 3.01787ZM16.5 3.48757L16.2849 2.76907V2.76907L16.5 3.48757ZM13.6738 4.80287L13.2982 4.15375L13.2982 4.15375L13.6738 4.80287ZM3.9824 3.07501L3.93639 3.8236L3.9824 3.07501ZM7 3.48757L7.19136 2.76239V2.76239L7 3.48757ZM10.2823 4.87558L9.93167 5.5386L10.2823 4.87558ZM13.6276 20.0694L13.9804 20.7312L13.6276 20.0694ZM17 18.6335L16.8086 17.9083H16.8086L17 18.6335ZM19.9851 18.2229L20.032 18.9715L19.9851 18.2229ZM10.3724 20.0694L10.0196 20.7312H10.0196L10.3724 20.0694ZM7 18.6335L7.19136 17.9083H7.19136L7 18.6335ZM4.01486 18.2229L3.96804 18.9715H3.96804L4.01486 18.2229ZM2.75 16.1437V4.99792H1.25V16.1437H2.75ZM22.75 16.1437V4.93332H21.25V16.1437H22.75ZM20.0559 2.26832C18.9175 2.30798 17.4296 2.42639 16.2849 2.76907L16.7151 4.20606C17.6643 3.92191 18.9892 3.80639 20.1081 3.76741L20.0559 2.26832ZM16.2849 2.76907C15.2899 3.06696 14.1706 3.6488 13.2982 4.15375L14.0495 5.452C14.9 4.95981 15.8949 4.45161 16.7151 4.20606L16.2849 2.76907ZM3.93639 3.8236C4.90238 3.88297 5.99643 3.99842 6.80864 4.21274L7.19136 2.76239C6.23055 2.50885 5.01517 2.38707 4.02841 2.32642L3.93639 3.8236ZM6.80864 4.21274C7.77076 4.46663 8.95486 5.02208 9.93167 5.5386L10.6328 4.21257C9.63736 3.68618 8.32766 3.06224 7.19136 2.76239L6.80864 4.21274ZM13.9804 20.7312C14.9714 20.2029 16.1988 19.6206 17.1914 19.3587L16.8086 17.9083C15.6383 18.2171 14.2827 18.8702 13.2748 19.4075L13.9804 20.7312ZM17.1914 19.3587C17.9943 19.1468 19.0732 19.0314 20.032 18.9715L19.9383 17.4744C18.9582 17.5357 17.7591 17.6575 16.8086 17.9083L17.1914 19.3587ZM10.7252 19.4075C9.71727 18.8702 8.3617 18.2171 7.19136 17.9083L6.80864 19.3587C7.8012 19.6206 9.0286 20.2029 10.0196 20.7312L10.7252 19.4075ZM7.19136 17.9083C6.24092 17.6575 5.04176 17.5357 4.06168 17.4744L3.96804 18.9715C4.9268 19.0314 6.00566 19.1468 6.80864 19.3587L7.19136 17.9083ZM21.25 16.1437C21.25 16.8295 20.6817 17.4279 19.9383 17.4744L20.032 18.9715C21.5062 18.8793 22.75 17.6799 22.75 16.1437H21.25ZM22.75 4.93332C22.75 3.47001 21.5847 2.21507 20.0559 2.26832L20.1081 3.76741C20.7229 3.746 21.25 4.25173 21.25 4.93332H22.75ZM1.25 16.1437C1.25 17.6799 2.49378 18.8793 3.96804 18.9715L4.06168 17.4744C3.31831 17.4279 2.75 16.8295 2.75 16.1437H1.25ZM13.2748 19.4075C12.4825 19.8299 11.5175 19.8299 10.7252 19.4075L10.0196 20.7312C11.2529 21.3886 12.7471 21.3886 13.9804 20.7312L13.2748 19.4075ZM13.2982 4.15375C12.4801 4.62721 11.4617 4.65083 10.6328 4.21257L9.93167 5.5386C11.2239 6.22189 12.791 6.18037 14.0495 5.452L13.2982 4.15375ZM2.75 4.99792C2.75 4.30074 3.30243 3.78463 3.93639 3.8236L4.02841 2.32642C2.47017 2.23065 1.25 3.49877 1.25 4.99792H2.75Z" fill="currentColor"></path>
+                        <path d="M12 5.854V20.9999" stroke="currentColor" stroke-width="1.5"></path>
+                        <path d="M5 9L9 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                        <path d="M19 9L15 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                        <path d="M5 13L9 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                        <path d="M19 13L15 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                    </svg>
+                    <h3 class="text-2xl font-semibold mb-2 text-[#4B4B4B]">Capture the Little Things</h3>
+                    <p class="text-[#6D6B77]">Receive weekly prompts and questions to capture important aspects of your month, so you can easily recall them during your monthly check-in.</p>
+                </div>
+                <!-- Feature 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-xl text-center flex flex-col items-center transform hover:scale-105 transition-transform">
+                    <svg class="w-24 h-24 text-[#B97F77] mb-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.5">
+                        <path d="M12 3L12.4892 2.12785C12.1854 1.95738 11.8146 1.95738 11.5108 2.12785L12 3ZM13.3976 3.784L12.9084 4.65615C13.0542 4.73792 13.2181 4.78185 13.3852 4.78392L13.3976 3.784ZM15 3.80385L15.8598 3.29316C15.6818 2.99359 15.3608 2.80824 15.0124 2.80392L15 3.80385ZM15.8184 5.18162L14.9586 5.69231C15.044 5.83601 15.164 5.95603 15.3077 6.04139L15.8184 5.18162ZM17.1962 6L18.1961 5.98761C18.1918 5.63921 18.0064 5.31817 17.7068 5.14023L17.1962 6ZM17.216 7.60238L16.2161 7.61476C16.2181 7.78189 16.2621 7.94584 16.3438 8.09161L17.216 7.60238ZM18 9L18.8722 9.48924C19.0426 9.18535 19.0426 8.81465 18.8722 8.51076L18 9ZM17.216 10.3976L16.3438 9.90839C16.2621 10.0542 16.2181 10.2181 16.2161 10.3852L17.216 10.3976ZM17.1962 12L17.7068 12.8598C18.0064 12.6818 18.1918 12.3608 18.1961 12.0124L17.1962 12ZM15.8184 12.8184L15.3077 11.9586C15.164 12.044 15.044 12.164 14.9586 12.3077L15.8184 12.8184ZM15 14.1962L15.0124 15.1961C15.3608 15.1918 15.6818 15.0064 15.8598 14.7068L15 14.1962ZM13.3976 14.216L13.3852 13.2161C13.2181 13.2181 13.0542 13.2621 12.9084 13.3438L13.3976 14.216ZM12 15L11.5108 15.8722C11.8146 16.0426 12.1854 16.0426 12.4892 15.8722L12 15ZM10.6024 14.216L11.0916 13.3438C10.9458 13.2621 10.7819 13.2181 10.6148 13.2161L10.6024 14.216ZM9 14.1962L8.14023 14.7068C8.31817 15.0064 8.63921 15.1918 8.98761 15.1961L9 14.1962ZM8.18162 12.8184L9.04139 12.3077C8.95603 12.164 8.83602 12.044 8.69231 11.9586L8.18162 12.8184ZM6.80385 12L5.80392 12.0124C5.80824 12.3608 5.99359 12.6818 6.29316 12.8598L6.80385 12ZM6.784 10.3976L7.78392 10.3852C7.78185 10.2181 7.73792 10.0542 7.65615 9.90839L6.784 10.3976ZM6 9L5.12785 8.51076C4.95738 8.81465 4.95738 9.18535 5.12785 9.48924L6 9ZM6.784 7.60238L7.65615 8.09161C7.73792 7.94584 7.78185 7.78189 7.78392 7.61476L6.784 7.60238ZM6.80385 6L6.29316 5.14023C5.99359 5.31817 5.80824 5.63921 5.80392 5.98762L6.80385 6ZM8.18162 5.18162L8.69231 6.04139C8.83602 5.95603 8.95603 5.83602 9.04139 5.69231L8.18162 5.18162ZM9 3.80385L8.98762 2.80392C8.63921 2.80824 8.31817 2.99359 8.14023 3.29316L9 3.80385ZM10.6024 3.784L10.6148 4.78392C10.7819 4.78185 10.9458 4.73792 11.0916 4.65615L10.6024 3.784ZM8.5 21H7.5C7.5 21.3565 7.68976 21.686 7.99807 21.8649C8.30639 22.0438 8.68664 22.0451 8.99614 21.8682L8.5 21ZM12 19L12.4961 18.1318C12.1887 17.9561 11.8113 17.9561 11.5039 18.1318L12 19ZM15.5 21L15.0039 21.8682C15.3134 22.0451 15.6936 22.0438 16.0019 21.8649C16.3102 21.686 16.5 21.3565 16.5 21H15.5ZM11.5108 3.87215L12.9084 4.65615L13.8869 2.91185L12.4892 2.12785L11.5108 3.87215ZM13.3852 4.78392L14.9876 4.80377L15.0124 2.80392L13.41 2.78408L13.3852 4.78392ZM14.1402 4.31454L14.9586 5.69231L16.6781 4.67094L15.8598 3.29316L14.1402 4.31454ZM15.3077 6.04139L16.6855 6.85977L17.7068 5.14023L16.3291 4.32186L15.3077 6.04139ZM16.1962 6.01239L16.2161 7.61476L18.2159 7.58999L18.1961 5.98761L16.1962 6.01239ZM16.3438 8.09161L17.1278 9.48924L18.8722 8.51076L18.0882 7.11314L16.3438 8.09161ZM17.1278 8.51076L16.3438 9.90839L18.0882 10.8869L18.8722 9.48924L17.1278 8.51076ZM16.2161 10.3852L16.1962 11.9876L18.1961 12.0124L18.2159 10.41L16.2161 10.3852ZM14.9876 13.1962L13.3852 13.2161L13.41 15.2159L15.0124 15.1961L14.9876 13.1962ZM10.6148 13.2161L9.01239 13.1962L8.98761 15.1961L10.59 15.2159L10.6148 13.2161ZM7.80377 11.9876L7.78392 10.3852L5.78408 10.41L5.80392 12.0124L7.80377 11.9876ZM7.65615 9.90839L6.87215 8.51076L5.12785 9.48924L5.91185 10.8869L7.65615 9.90839ZM6.87215 9.48924L7.65615 8.09161L5.91185 7.11314L5.12785 8.51076L6.87215 9.48924ZM7.78392 7.61476L7.80377 6.01238L5.80392 5.98762L5.78408 7.58999L7.78392 7.61476ZM7.31454 6.85977L8.69231 6.04139L7.67094 4.32186L6.29316 5.14023L7.31454 6.85977ZM9.04139 5.69231L9.85977 4.31454L8.14023 3.29316L7.32186 4.67094L9.04139 5.69231ZM9.01238 4.80377L10.6148 4.78392L10.59 2.78408L8.98762 2.80392L9.01238 4.80377ZM11.0916 4.65615L12.4892 3.87215L11.5108 2.12785L10.1131 2.91185L11.0916 4.65615ZM16.6855 11.1402L15.3077 11.9586L16.3291 13.6781L17.7068 12.8598L16.6855 11.1402ZM8.69231 11.9586L7.31454 11.1402L6.29316 12.8598L7.67094 13.6781L8.69231 11.9586ZM12.9084 13.3438L11.5108 14.1278L12.4892 15.8722L13.8869 15.0882L12.9084 13.3438ZM12.4892 14.1278L11.0916 13.3438L10.1131 15.0882L11.5108 15.8722L12.4892 14.1278ZM8.99614 21.8682L12.4961 19.8682L11.5039 18.1318L8.00386 20.1318L8.99614 21.8682ZM11.5039 19.8682L15.0039 21.8682L15.9961 20.1318L12.4961 18.1318L11.5039 19.8682ZM16.5 21V13.3544H14.5V21H16.5ZM14.9586 12.3077L14.6402 12.8437L16.3598 13.8651L16.6781 13.3291L14.9586 12.8184ZM14.6402 12.8437L14.1402 13.6855L15.8598 14.7068L16.3598 13.8651L14.6402 12.8437ZM7.5 13.3544V21H9.5V13.3544H7.5ZM9.85977 13.6855L9.35977 12.8437L7.64023 13.8651L8.14023 14.7068L9.85977 13.6855ZM9.35977 12.8437L9.04139 12.3077L7.32186 13.3291L7.64023 13.8651L9.35977 12.8437ZM13 9C13 9.55228 12.5523 10 12 10V12C13.6569 12 15 10.6569 15 9H13ZM12 10C11.4477 10 11 9.55228 11 9H9C9 10.6569 10.3431 12 12 12V10ZM11 9C11 8.44772 11.4477 8 12 8V6C10.3431 6 9 7.34315 9 9H11ZM12 8C12.5523 8 13 8.44772 13 9H15C15 7.34315 13.6569 6 12 6V8Z" fill="currentColor" stroke-width="0.00024"></path>
+                    </svg>
+                    <h3 class="text-2xl font-semibold mb-2 text-[#4B4B4B]">Track Your Progress</h3>
+                    <p class="text-[#6D6B77]">Look back at your journey, see how you've grown, and celebrate the small and big milestones you've achieved together.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works Section -->
+    <section id="how-it-works" class="py-20 container mx-auto px-4 md:px-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-center text-[#4B4B4B] mb-12">Simple Steps to a Stronger Bond</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <!-- Step 1 -->
+            <div class="flex flex-col items-center text-center">
+                <div class="w-16 h-16 bg-[#B97F77] rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4 shadow-lg">1</div>
+                <h3 class="text-xl font-semibold mb-2 text-[#4B4B4B]">Create a Huddle</h3>
+                <p class="text-[#6D6B77]">Sign up and invite your partner to create your shared, private space.</p>
+            </div>
+            <!-- Step 2 -->
+            <div class="flex flex-col items-center text-center">
+                <div class="w-16 h-16 bg-[#B97F77] rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4 shadow-lg">2</div>
+                <h3 class="text-xl font-semibold mb-2 text-[#4B4B4B]">Reflect Privately </h3>
+                <p class="text-[#6D6B77]">Answer guided questions throughout the month. Your thoughts are kept private until you decide to share at your monthly Huddle.</p>
+            </div>
+            <!-- Step 3 -->
+            <div class="flex flex-col items-center text-center">
+                <div class="w-16 h-16 bg-[#B97F77] rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4 shadow-lg">3</div>
+                <h3 class="text-xl font-semibold mb-2 text-[#4B4B4B]">Connect Together</h3>
+                <p class="text-[#6D6B77]">Come together to discuss your reflections, open up with tailored prompts and set aspirational couple goals.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="bg-[#6D6B77] py-20 text-center">
+        <div class="container mx-auto px-4 md:px-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Reconnect?</h2>
+            <p class="text-lg md:text-xl text-[#F7F3EF] mb-8">Join thousands of couples strengthening their relationship, one conversation at a time.</p>
+            <button id="get-started-cta" class="bg-[#B97F77] text-white font-bold text-lg py-4 px-8 rounded-full shadow-lg hover:bg-[#A36D64] transition-colors transform hover:scale-105">
+                Join the Waitlist
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#4B4B4B] py-8 text-center text-white">
+        <p>&copy; 2024 Huddle. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const getStartedButtons = document.querySelectorAll('#get-started-nav, #get-started-hero, #get-started-cta');
+            const messageBox = document.getElementById('message-box');
+            const backdrop = document.getElementById('backdrop');
+            const formContent = document.getElementById('form-content');
+            const thankYouContent = document.getElementById('thank-you-content');
+            const closeButton = document.getElementById('close-message');
+            const waitlistForm = document.getElementById('waitlist-form');
+
+            // Show message box and backdrop on button click
+            getStartedButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    messageBox.classList.remove('hidden');
+                    backdrop.classList.remove('hidden');
+                });
+            });
+
+            // Handle form submission
+            waitlistForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                // In a real app, you would send the email to a server here.
+                // For this example, we'll just show the thank you message.
+                
+                // Hide the form and show the thank you message
+                formContent.classList.add('hidden');
+                thankYouContent.classList.remove('hidden');
+            });
+
+            // Hide message box and backdrop on close button click
+            closeButton.addEventListener('click', () => {
+                messageBox.classList.add('hidden');
+                backdrop.classList.add('hidden');
+                // Reset to form view in case user opens again
+                formContent.classList.remove('hidden');
+                thankYouContent.classList.add('hidden');
+            });
+            
+            // Hide message box and backdrop on backdrop click
+            backdrop.addEventListener('click', () => {
+                messageBox.classList.add('hidden');
+                backdrop.classList.add('hidden');
+                // Reset to form view in case user opens again
+                formContent.classList.remove('hidden');
+                thankYouContent.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
